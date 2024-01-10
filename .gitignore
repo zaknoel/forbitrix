@@ -1,0 +1,22 @@
+# Ignore vendor directory
+/vendor/
+
+# Ignore composer.lock file
+/composer.lock
+
+# Ignore environment-specific files
+.env
+.env.*
+
+# Ignore PHPStorm project settings
+/.idea/
+
+# Ignore log files
+/log/
+*.log
+
+# Ignore user-specific files
+/.vscode/
+
+# Ignore macOS system files
+.DS_Store

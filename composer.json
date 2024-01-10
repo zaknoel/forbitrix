@@ -1,0 +1,20 @@
+{
+    "name": "zaknoel/for-bitrix",
+    "description": "Classes for work with bitrix framework projects by Zak",
+    "type": "library",
+    "require": {
+        "php": "^8.1"
+    },
+    "license": "proprietary",
+    "autoload": {
+        "psr-4": {
+            "Zaknoel\\ForBitrix\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "ZakNoel",
+            "email": "softdeveleng@gmail.com"
+        }
+    ]
+}
