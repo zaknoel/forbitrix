@@ -16,5 +16,6 @@
             "name": "ZakNoel",
             "email": "softdeveleng@gmail.com"
         }
-    ]
+    ],
+    "minimum-stability": "dev"
 }
