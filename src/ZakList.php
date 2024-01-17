@@ -266,7 +266,7 @@ function prepare(){
         ];
         $_sort++;
     }
-    Bitrix\Main\Type\Collection::sortByColumn($this->arHeader, ['column_sort' => SORT_ASC], '', PHP_INT_MAX);
+    \Bitrix\Main\Type\Collection::sortByColumn($this->arHeader, ['column_sort' => SORT_ASC], '', PHP_INT_MAX);
     foreach ($this->arHeader as $k=>$h){
         if(!$h['name']) $this->arHeader[$k]['name']=$h['content'];
     }
@@ -414,7 +414,7 @@ function replacer($row, $onc){
 }
 public function AddFilter(array $filterFields, array &$arFilter)
 {
-    $filterOption = new Bitrix\Main\UI\Filter\Options($this->id);
+    $filterOption = new \Bitrix\Main\UI\Filter\Options($this->id);
     if($this->presets){
         $filterOption->setupDefaultFilter($this->presets['tmp_filter']['fields'], $filterOption->getUsedFields());
         global  $APPLICATION;

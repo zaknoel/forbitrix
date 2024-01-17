@@ -83,7 +83,7 @@ class HlAsUser{
         });
 
     }
-    private function OnBeforeAdd(Bitrix\Main\Entity\Event $event){
+    private function OnBeforeAdd(\Bitrix\Main\Entity\Event $event){
         $event = new Event($event);
         $all = $event->getAll();
         $ID = $event->getID();
@@ -112,7 +112,7 @@ class HlAsUser{
             $err="Пароль должен быть не менее 6 символов длиной";
         }
         if($err){
-            $result = new Bitrix\Main\Entity\EventResult();
+            $result = new \Bitrix\Main\Entity\EventResult();
             $entity = $event->event->getEntity();
             $arErrors = array();
             $arErrors[] = new \Bitrix\Main\Entity\FieldError($entity->getField("UF_LOGIN"),
