@@ -46,10 +46,10 @@ class HlAsUser{
 
             $by = 'id';
             $order = "asc";
-            $user = CUser::GetList($by, $order, [$this->prop => $id])->GetNext();
+            $user = \CUser::GetList($by, $order, [$this->prop => $id])->GetNext();
             if($user){
                 $GLOBALS['onHDelete']=1;
-                CUser::Delete($user['ID']);
+                \CUser::Delete($user['ID']);
                 $GLOBALS['onHDelete']=0;
             }
         });
@@ -96,7 +96,7 @@ class HlAsUser{
         if(strlen($arUser['LOGIN'])<3){
             $err="Логин должен быть не менее 3 символов.";
         }else{
-            $user=CUser::GetByLogin($arUser['LOGIN'])->GetNext();
+            $user=\CUser::GetByLogin($arUser['LOGIN'])->GetNext();
             if($user){
                 if($ID){
                     if($user[$this->prop]!=$ID){
@@ -134,7 +134,7 @@ class HlAsUser{
         $ID = $event->getID();
         $by = 'id';
         $order = "asc";
-        $user = CUser::GetList($by, $order, [$this->prop => $ID])->GetNext();
+        $user = \CUser::GetList($by, $order, [$this->prop => $ID])->GetNext();
         if (!$user) {
             $arUser = [
                 "NAME" => $all['UF_NAME'],
@@ -167,9 +167,5 @@ class HlAsUser{
         }
         return $event;
     }
-
-
-
-
 }
 ?>

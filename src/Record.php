@@ -8,7 +8,7 @@ class Record
     var $LAST_ERROR;
     function __construct($hblock)
     {
-        CModule::IncludeModule("highloadblock");
+        \CModule::IncludeModule("highloadblock");
         $this->ib=$hblock;
         if (is_numeric($hblock)) {
 
@@ -18,7 +18,7 @@ class Record
             $rsData = \Bitrix\Highloadblock\HighloadBlockTable::getList(array('filter' => array('TABLE_NAME' => $hblock)));
         }
         if ( !($arData = $rsData->fetch()) ){
-            throw new Error('Инфоблок не найден');
+            throw new \Error('Инфоблок не найден');
         }
         $this->entity =\Bitrix\Highloadblock\HighloadBlockTable::compileEntity($arData);
         return $this;
@@ -44,7 +44,7 @@ class Record
     function Update($id, $arFields=[], $err=false): bool
     {
         if(!$id){
-            throw new Error("Update primary key value is empty" .print_r($arFields, 1).":".$id);
+            throw new \Error("Update primary key value is empty" .print_r($arFields, 1).":".$id);
         }
         $DataClass = $this->entity->getDataClass();
         $result = $DataClass::update($id, $arFields);
@@ -92,7 +92,7 @@ class Record
         endif;
 
         $result = $this->entity->getDataClass()::getList($arFields);
-        $result = new CDBResult($result);
+        $result = new \CDBResult($result);
         if($onlyResult) return $result;
         $arLang = array();
         while ($row = $result->Fetch()){

@@ -446,7 +446,7 @@ class GridList
                                         ?>
                                         <? break;
                                     case "enumeration":
-                                        $a = CUserFieldEnum::GetList([], ['USER_FIELD_ID' => $field['ID']]);
+                                        $a = \CUserFieldEnum::GetList([], ['USER_FIELD_ID' => $field['ID']]);
                                         $items = [];
                                         while ($b = $a->GetNext()) {
                                             $items[$b['ID']] = $b['VALUE'];
@@ -466,11 +466,11 @@ class GridList
                                         <? break;
                                     case 'file':
                                     if ($cur_value):
-                                        $file = CFile::GetByID($cur_value)->GetNext();
+                                        $file = \CFile::GetByID($cur_value)->GetNext();
                                         ?>
                                         <div class="mb-3 d-block">
                                             <a class="text-c-blue " target="_blank"
-                                               href="<?= CFile::GetPath($cur_value) ?>"><?= $file['ORIGINAL_NAME'] ?></a>
+                                               href="<?= \CFile::GetPath($cur_value) ?>"><?= $file['ORIGINAL_NAME'] ?></a>
                                             |
                                             <label><input type="checkbox" style="vertical-align: middle"
                                                           name="del[<?= $k ?>]" value="<?= $cur_value ?>">
@@ -559,9 +559,9 @@ class GridList
                     }
                     if ($this->params['onAdd']) {
                         try {
-                            $reflectionAction = new ReflectionFunction($this->params['onAdd']);
+                            $reflectionAction = new \ReflectionFunction($this->params['onAdd']);
                             $arUpdate = $reflectionAction->invoke($arUpdate);
-                        } catch (ReflectionException $e) {
+                        } catch (\ReflectionException $e) {
                         }
 
                     }

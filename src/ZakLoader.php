@@ -1,4 +1,4 @@
-<?
+<?php
 namespace Zaknoel\ForBitrix;
 class ZakLoader
 {
@@ -20,7 +20,7 @@ class ZakLoader
     {
 
         $this->handleAjaxActions();
-        CModule::IncludeModule('highloadblock');
+        \CModule::IncludeModule('highloadblock');
         if (!$profile) $profile = "";
         if (!$step) $step = 1;
         if (!$profile) $step = 1;
@@ -47,7 +47,7 @@ class ZakLoader
             case "save":
                 $isNew = $_REQUEST['profile'] == "new";
                 if ($isNew || $_FILES["FILE"]['name']) {
-                    $file_id = CFile::SaveFile($_FILES["FILE"], "zloader");
+                    $file_id = \CFile::SaveFile($_FILES["FILE"], "zloader");
                     if (!$file_id) {
                         $this->errors[] = "Не удалось сохранить файл";
                     }
@@ -192,9 +192,9 @@ class ZakLoader
                                         $r=false;
                                         if($v1){
                                             if(strpos($v1, "http")===0){
-                                                $r=CFile::MakeFileArray($v1);
+                                                $r=\CFile::MakeFileArray($v1);
                                             }elseif(strpos($v1, "/")===0){
-                                                $r=CFile::MakeFileArray($_SERVER['DOCUMENT_ROOT'].$v1);
+                                                $r=\CFile::MakeFileArray($_SERVER['DOCUMENT_ROOT'].$v1);
                                             }
                                             if(!$r['size']) $r=false;
                                         }
@@ -351,11 +351,11 @@ class ZakLoader
         $_SESSION['import'] = [];
         $profile = $this->getProfile($this->profile);
         if (!$profile) die('Profile not found!');
-        $file = $_SERVER['DOCUMENT_ROOT'] . CFile::GetPath($profile['FILE']);
+        $file = $_SERVER['DOCUMENT_ROOT'] . \CFile::GetPath($profile['FILE']);
         if (!file_exists($file)) {
             die("File not found!");
         }
-        $xlsx = SimpleXLSX::parse($file);
+        $xlsx = \SimpleXLSX::parse($file);
         if (!$xlsx) die('Can not read file');
         $cfile = $_SERVER['DOCUMENT_ROOT'] . '/upload/loader_' . $profile["ID"] . '.txt';
         $rows = $xlsx->rows($profile['settings']['sheet']);
@@ -510,11 +510,11 @@ class ZakLoader
     {
         $profile = $this->getProfile($this->profile);
         if (!$profile) die('Profile not found!');
-        $file = $_SERVER['DOCUMENT_ROOT'] . CFile::GetPath($profile['FILE']);
+        $file = $_SERVER['DOCUMENT_ROOT'] . \CFile::GetPath($profile['FILE']);
         if (!file_exists($file)) {
             die("File not found!");
         }
-        $xlsx = SimpleXLSX::parse($file);
+        $xlsx = \SimpleXLSX::parse($file);
         if (!$xlsx) die('Can not read file');
         $rows = $xlsx->rows($profile['settings']['sheet']);
         $col = $profile['settings']['header_col'] - 1;
@@ -583,11 +583,11 @@ class ZakLoader
     {
         $profile = $this->getProfile($this->profile);
         if (!$profile) die('Profile not found!');
-        $file = $_SERVER['DOCUMENT_ROOT'] . CFile::GetPath($profile['FILE']);
+        $file = $_SERVER['DOCUMENT_ROOT'] . \CFile::GetPath($profile['FILE']);
         if (!file_exists($file)) {
             die("File not found!");
         }
-        $xlsx = SimpleXLSX::parse($file);
+        $xlsx = \SimpleXLSX::parse($file);
         if (!$xlsx) die('Can not read file');
         $sheets = $xlsx->sheetNames();
         $curSheet = $_REQUEST["sheet"] ?: $profile['settings']['sheet'];
@@ -670,10 +670,10 @@ class ZakLoader
                            accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
                         <?= !$profile['FILE'] ? "required" : '' ?> class="form-control">
                     <? if ($profile['FILE']):
-                        $file = CFile::GetByID($profile['FILE'])->GetNext();
+                        $file = \CFile::GetByID($profile['FILE'])->GetNext();
                         if ($file):
                             ?>
-                            <a href="<?= CFile::GetPath($file['ID']) ?>" class="text-c-blue f-12" download=""
+                            <a href="<?= \CFile::GetPath($file['ID']) ?>" class="text-c-blue f-12" download=""
                                title="<?= $file['ORIGINAL_NAME'] ?>">
                                 <i class="fa fa-file-excel"></i> <?= $file['ORIGINAL_NAME'] ?>
                             </a>
@@ -1021,7 +1021,7 @@ AND  b.USER_FIELD_ID=a.ID AND b.LANGUAGE_ID="ru" order by SORT asc';
     {
         if(!$value) return  false;
         if(!$list=$this->cache['enums'][$field['ID']]){
-            $fenum = new CUserFieldEnum();
+            $fenum = new \CUserFieldEnum();
             $dbRes = $fenum->GetList(array("SORT"=>"ASC", "VALUE"=>"ASC"), array('USER_FIELD_ID'=>$field['ID']));
             while(($arr = $dbRes->Fetch()))
             {
@@ -1032,7 +1032,7 @@ AND  b.USER_FIELD_ID=a.ID AND b.LANGUAGE_ID="ru" order by SORT asc';
 
         $find=array_search(trim(toLower($value)), $list);
         if($find) return $find;
-        $obEnum = new CUserFieldEnum;
+        $obEnum = new \CUserFieldEnum;
         $obEnum->SetEnumValues($field['ID'], array(
             "n0" => array(
                 "VALUE" => trim($value),

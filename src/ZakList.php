@@ -16,7 +16,7 @@ function __construct($hl, $access_page='')
     global $APPLICATION;
     $this->hl=$hl;
     $this->access_page=$access_page;
-    $this->id=CSite::InDir('/events/')?md5($APPLICATION->GetCurPage()).'hl_block_'.$this->hl:'hl_block_'.$this->hl;
+    $this->id=\CSite::InDir('/events/')?md5($APPLICATION->GetCurPage()).'hl_block_'.$this->hl:'hl_block_'.$this->hl;
     $this->entity=Record::init($hl);
     $this->postActions();
 
@@ -131,7 +131,7 @@ function getFilterData(){
                     ];
                     break;
                 case 'enumeration':
-                    $a=CUserFieldEnum::GetList([], ['USER_FIELD_ID'=>$f['ID']]);
+                    $a=\CUserFieldEnum::GetList([], ['USER_FIELD_ID'=>$f['ID']]);
                     while ($b=$a->GetNext()){
                         $fItem['items'][$b['ID']]=$b['VALUE'];
                     }
@@ -139,8 +139,8 @@ function getFilterData(){
                 case 'iblock_section';
                     $ib=$f['SETTINGS']['IBLOCK_ID'];
                     if($ib){
-                        CModule::IncludeModule('iblock');
-                        $_a=CIBlockSection::GetList(['SORT'=>"ASC"], ['IBLOCK_ID'=>$ib, 'ACTIVE'=>"Y"], false, ['ID', 'NAME'], ['nTopCount'=>500]);
+                        \CModule::IncludeModule('iblock');
+                        $_a=\CIBlockSection::GetList(['SORT'=>"ASC"], ['IBLOCK_ID'=>$ib, 'ACTIVE'=>"Y"], false, ['ID', 'NAME'], ['nTopCount'=>500]);
                         while($_b=$_a->GetNext()){
                             $fItem['items'][$_b['ID']]=$_b['NAME'];
                         }
@@ -149,8 +149,8 @@ function getFilterData(){
                 case 'iblock_element';
                     $ib=$f['SETTINGS']['IBLOCK_ID'];
                     if($ib){
-                        CModule::IncludeModule('iblock');
-                        $_a=CIBlockElement::GetList(['SORT'=>"ASC"], ['IBLOCK_ID'=>$ib, 'ACTIVE'=>"Y"], false, ['nTopCount'=>500], ['ID', 'NAME']);
+                        \CModule::IncludeModule('iblock');
+                        $_a=\CIBlockElement::GetList(['SORT'=>"ASC"], ['IBLOCK_ID'=>$ib, 'ACTIVE'=>"Y"], false, ['nTopCount'=>500], ['ID', 'NAME']);
                         while($_b=$_a->GetNext()){
                             $fItem['items'][$_b['ID']]=$_b['NAME'];
                         }
@@ -172,9 +172,9 @@ function getFilterData(){
         if($fItem){
             if($this->changerFilter['filter'][$f['FIELD_NAME']]){
                 try {
-                    $reflectionAction = new ReflectionFunction($this->changerFilter['filter'][$f['FIELD_NAME']]);
+                    $reflectionAction = new \ReflectionFunction($this->changerFilter['filter'][$f['FIELD_NAME']]);
                     $fItem=$reflectionAction->invoke($fItem);
-                } catch (ReflectionException $e) {
+                } catch (\ReflectionException $e) {
 
                 }
 
@@ -270,7 +270,7 @@ function prepare(){
     foreach ($this->arHeader as $k=>$h){
         if(!$h['name']) $this->arHeader[$k]['name']=$h['content'];
     }
-    /**@var CDBResult $res*/
+    /**@var \CDBResult $res*/
     $GLOBALS['hlFilter']=$filterData;
     foreach ($sort['sort'] as $k=>$v){
         if(!array_key_exists($k, $this->fields) && $k!="ID"){
@@ -311,16 +311,16 @@ function prepare(){
                 case "file":
                 case "video":
                     if($v){
-                        $file=CFile::GetByID($v)->GetNext();
+                        $file=\CFile::GetByID($v)->GetNext();
                         if(strpos($file['CONTENT_TYPE'], 'image/')!==FALSE){
                             if($this->fields[$k]['FIELD_NAME']=='UF_PHOTO'){
-                                $v='<img src="'.CFile::GetPath($v).'" alt="user image" class="img-radius img-40 align-top m-r-15">';
+                                $v='<img src="'.\CFile::GetPath($v).'" alt="user image" class="img-radius img-40 align-top m-r-15">';
                             }else{
-                                $v='<img src="'.CFile::GetPath($v).'" alt="user image" class="img-square img-100 align-top m-r-15">';
+                                $v='<img src="'.\CFile::GetPath($v).'" alt="user image" class="img-square img-100 align-top m-r-15">';
                             }
 
                         }else{
-                            $v='<a href="'.CFile::GetPath($v).'" download class="col-text-blue">'.$file['ORIGINAL_NAME'].'</a>';
+                            $v='<a href="'.\CFile::GetPath($v).'" download class="col-text-blue">'.$file['ORIGINAL_NAME'].'</a>';
                         }
 
                     }else{
@@ -344,7 +344,7 @@ function prepare(){
                     break;
                 case "enumeration":
                     if($v){
-                        $a=CUserFieldEnum::GetList([], ['USER_FIELD_ID'=>$field['ID'], 'ID'=>$v])->GetNext();
+                        $a=\CUserFieldEnum::GetList([], ['USER_FIELD_ID'=>$field['ID'], 'ID'=>$v])->GetNext();
                         $v=$a['VALUE'];
                     }else{
                         $v= "-";
@@ -364,15 +364,15 @@ function prepare(){
                 $v=$v === 'Да'?'<span class="label label-success">Да</span>':'<span class="label label-danger">Нет</span>';
             }
             if($k === 'UF_USER' && $v){
-                $u=CUser::GetByID($v)->GetNext();
+                $u=\CUser::GetByID($v)->GetNext();
                 $v=$u['NAME'].' ('.$u['LAST_NAME'].')';
             }
             if($this->changerFilter['change'][$k]){
                 try {
-                    $reflectionAction = new ReflectionFunction($this->changerFilter['change'][$k]);
+                    $reflectionAction = new \ReflectionFunction($this->changerFilter['change'][$k]);
                     $v=$reflectionAction->invoke($row, $v);
 
-                } catch (ReflectionException $e) {
+                } catch (\ReflectionException $e) {
                 }
 
             }
@@ -381,9 +381,9 @@ function prepare(){
         }
         if($this->changerFilter['action']){
             try {
-                $reflectionAction = new ReflectionFunction($this->changerFilter['action']);
+                $reflectionAction = new \ReflectionFunction($this->changerFilter['action']);
                 $list['actions']=$reflectionAction->invoke($row);
-            } catch (ReflectionException $e) {
+            } catch (\ReflectionException $e) {
 
             }
 

@@ -11,7 +11,7 @@ class iCache{
         $this->cache_id=$cache_id.'_'.SITE_ID;
         $this->cache_time=$cache_time;
         $this->cache_path=$cache_path;
-        $this->cache=new CPHPCache();
+        $this->cache=new \CPHPCache();
 
     }
     function hasCache(){
@@ -29,7 +29,7 @@ class iCache{
     public static function init($key, $function, $time='36000'){
         $cache=new iCache($key, $time);
         if(!$data=$cache->hasCache()){
-            $reflectionAction = new ReflectionFunction($function);
+            $reflectionAction = new \ReflectionFunction($function);
             $data=$reflectionAction->invoke();
             if(is_array($data)){
                 $cache->SaveToCache($data);
