@@ -1,5 +1,5 @@
 <?
-
+namespace Zaknoel\ForBitrix;
 class ZakLoader
 {
     private string $table = "zak_loader_profiles";

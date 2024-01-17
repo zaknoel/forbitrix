@@ -1,5 +1,5 @@
 <?
-
+namespace Zaknoel\ForBitrix;
 use Bitrix\Main\Grid\Options as GridOptions;
 use Bitrix\Main\UI\PageNavigation;
 use Bitrix\Tasks\Grid\Row\Content\UserField;

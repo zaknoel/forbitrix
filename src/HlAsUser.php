@@ -1,4 +1,5 @@
 <?
+namespace Zaknoel\ForBitrix;
 class HlAsUser{
     private  string $tableName;
     private int $group;

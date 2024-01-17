@@ -1,4 +1,5 @@
 <?
+namespace Zaknoel\ForBitrix;
 class Record
 {
     public static $instance;

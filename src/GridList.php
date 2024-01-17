@@ -1,5 +1,5 @@
 <?
-
+namespace Zaknoel\ForBitrix;
 class GridList
 {
     var $id, $params;

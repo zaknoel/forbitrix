@@ -1,4 +1,5 @@
 <?
+namespace Zaknoel\ForBitrix;
 class iCache{
     private $cache_id;
     private $cache_time;

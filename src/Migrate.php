@@ -1,4 +1,5 @@
 <?
+namespace Zaknoel\ForBitrix;
 
 use Sprint\Migration\VersionManager;
 

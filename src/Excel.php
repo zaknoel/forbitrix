@@ -1,4 +1,5 @@
 <?
+namespace Zaknoel\ForBitrix;
 class Excel{
     public static $instance;
     public static function init(){
