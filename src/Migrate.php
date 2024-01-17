@@ -1,7 +1,7 @@
 <?
 namespace Zaknoel\ForBitrix;
 
-use Sprint\Migration\VersionManager;
+use \Sprint\Migration\VersionManager;
 
 class Migrate{
     private bool $active=true;
