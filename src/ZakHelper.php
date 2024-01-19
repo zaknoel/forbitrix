@@ -61,7 +61,7 @@ class ZakHelper
     }
     public static function SendErrorMessage($mess){
         if (defined('BOT_TOKEN') && !empty(BOT_TOKEN)
-        defined('BOT_CHAT_ID') && !empty(BOT_CHAT_ID)) {
+        && defined('BOT_CHAT_ID') && !empty(BOT_CHAT_ID)) {
             /**@var \TelegramBot\Api\BotApi $bbot;*/
             $bbot= new \TelegramBot\Api\Client(BOT_TOKEN, false, true);
             $text=$_SERVER["HTTP_HOST"].$_SERVER['REQUEST_URI'].PHP_EOL;
