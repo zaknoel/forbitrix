@@ -176,7 +176,7 @@ class GridList
 
                     <div class="modal-body">
                         <? foreach ($fields as $k => $field):
-                            if (in_array($k, $this->params['not_add'])) continue;
+                            if (in_array($k, $this->params['not_add']??[])) continue;
                             if (!$this->params['fields'][$k] && !$field['TITLE']) continue;
                             $cur_value = $_REQUEST['v'][$k]?:$data[$k];
                             $req = $field['MANDATORY'] == 'Y' || $k == 'UF_NAME' ? 'required' : '';
